@@ -1,5 +1,5 @@
 # CS321
-This Repo contains Assignment Submissions for Peripherals Lab-CS321 by Group 15
+This Repo contains Assignment Submissions for Peripherals Lab-CS321 by Group 16
 * Abhinav Hinger 160101004
 * Akhil Chandra 160101011
 * Ansh Sood 160101012
@@ -20,8 +20,29 @@ All Addresses and Data Values are to be written in Hexadecimal system.(Eg. LDA 8
 7. The file is now downloaded to the board . Follow the steps from the Help Guide to run the program.
 
 ## Assignments
-### 8-bit and 16-bit Calculator
-
-
+### 1. 8-bit and 16-bit Calculator
+This program takes 2 Hexadecimal numbers(8bit or 16bit) and another integer to specify the instruction(+,-,\*,/). It then calculates the result and stores it in consecutive memory addresses.
+1. __Addition__(A+B):
+  * For 8-bit ,ADD B instruction is used.It adds the contents of B to the Accumulator A and stores the result in A itself.It
+  also sets the Carry Flag 1 if there is carry which is displayed in next address.
+  * For 16-bit we used register pair H,L analogous to Accumulator and DAD (Adds Register pair to H,L pair) and sets Carry
+  Flag if carry.
+2. __Subtraction__(A-B):
+  * For 8-bit ,SUB instruction is used.It subtracts the contents of register specified from the Accumulator A and stores the
+  result in A itself.It also sets the Borrow Flag 1 if there is a borrow.
+  * For 16-bit ,since the operation is only performed on 8 bits , we subtracted LSB and MSB of the numbers separately
+  First LSBs are operated , the borrow generated from this operation is subtracted from MSB of A.MSB of B is then subtracted
+  from the result.The Borrow bit from this operation is stored in consecutive Memory locations.
+  * For 8 bit and 16 bit Subtractor,if the result is negative then the 2's complement of the result is displayed by the
+  processor. We converted it back along with the borrow bit(Indicates negative result).
+Eg 123H - 1234H --> 0001H 1111H (Answer is -1111)
+3. __Multiplication__(A\*B):
+   * We are doing repetitive addition of A , B times.Carry is incremented at every addition if it set carry flag 1.
+   * As the multiplcation of two 8 bit numbers can be maximum of 16 bits so we need register pair to store the result.
+   * Same Algorithm is followed for 16 bit numbers.Similar operations for Register Pairs are used (INX,DCX,ORA etc.)
+4. __Division__ (A\/B):
+   * We are doing repeated subtraction of B from until A is less than B.The further subtraction will lead to a borrow bit 
+   the loop breaks.The number of subtractions done until just before A was negative is the quotient.The closest positive
+   value of A is the Remainder(Calculated by adding B to 1st negative value of A).
 
 
