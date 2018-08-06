@@ -1,5 +1,5 @@
 # CS321
-This Repo contains Assignment Submissions for Peripherals Lab-CS321 by Group 15
+This Repo contains Assignment Submissions for Peripherals Lab-CS321 by Group 16
 * Abhinav Hinger 160101004
 * Akhil Chandra 160101011
 * Ansh Sood 160101012
@@ -33,12 +33,16 @@ This program takes 2 Hexadecimal numbers(8bit or 16bit) and another integer to s
   * For 16-bit ,since the operation is only performed on 8 bits , we subtracted LSB and MSB of the numbers separately
   First LSBs are operated , the borrow generated from this operation is subtracted from MSB of A.MSB of B is then subtracted
   from the result.The Borrow bit from this operation is stored in consecutive Memory locations.
-  * For 8 bit and 16 bit Subtrator,if the result is negative then the 2's complement of the result is displayed by the
+  * For 8 bit and 16 bit Subtractor,if the result is negative then the 2's complement of the result is displayed by the
   processor. We converted it back along with the borrow bit(Indicates negative result).
 Eg 123H - 1234H --> 0001H 1111H (Answer is -1111)
 3. __Multiplication__(A\*B):
    * We are doing repetitive addition of A , B times.Carry is incremented at every addition if it set carry flag 1.
    * As the multiplcation of two 8 bit numbers can be maximum of 16 bits so we need register pair to store the result.
-4. __Division__ 
+   * Same Algorithm is followed for 16 bit numbers.Similar operations for Register Pairs are used (INX,DCX,ORA etc.)
+4. __Division__ (A\/B):
+   * We are doing repeated subtraction of B from until A is less than B.The further subtraction will lead to a borrow bit 
+   the loop breaks.The number of subtractions done until just before A was negative is the quotient.The closest positive
+   value of A is the Remainder(Calculated by adding B to 1st negative value of A).
 
 
