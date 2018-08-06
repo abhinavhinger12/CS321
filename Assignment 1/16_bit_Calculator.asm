@@ -9,15 +9,15 @@ JZ ADD			;if zero, jump to label "ADD" (zero returned if compared numbers are eq
 CPI 02H			;compares accumulator with value 02
 JZ SUB 			
 
-CPI 03H
+CPI 03H			;compares accumulator with value 03
 JZ MULT
 
-CPI 04H
+CPI 04H			;compares accumulator with value 04
 JZ DIV
 
 ADD:			;"ADD" label
-MVI C,00H     		;stores 01 in register C
-LHLD 8200H    		;loads values in address location 8200 into H and 8201 into L (uses HL register pair)
+MVI C,00H     		;loads C with 00
+LHLD 8200H    		;loads values in address location 8200 into L and 8201 into H (uses HL register pair)
 XCHG          		;exchanges value in HL with DE
 LHLD 8202H    		;loads values in address location 8202 into H and 8203 into L
 DAD D         		;increments DE register pair
@@ -31,7 +31,7 @@ RST 5			;end program statement
 SUB:
 MVI C,00H    		;loads C with 00
 MVI B,00H    
-LHLD 8200H    		;loads H and L with values in addresses 8200 and 8201 respectively
+LHLD 8200H    		;loads L and H with values in addresses 8200 and 8201 respectively
 XCHG			
 LHLD 8202H		;DE contains value from which value in HL need to be subtracted
 MOV A,E
@@ -56,7 +56,6 @@ MOV A,H
 CMA 
 MOV H,A
 INX H
-
 LABEL5:
 SHLD 8206H
 MOV A,B
