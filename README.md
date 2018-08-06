@@ -1,9 +1,9 @@
 # CS321
 This Repo contains Assignment Submissions for Peripherals Lab-CS321 by Group 15
-Abhinav Hinger 160101004
-Akhil Chandra 160101011
-Ansh Sood 160101012
-Shimona Verma 160101065
+* Abhinav Hinger 160101004
+* Akhil Chandra 160101011
+* Ansh Sood 160101012
+* Shimona Verma 160101065
 
 ## 8085 Programming Model
 8085 processor has 7 8-bit registers including accumulator and 6 others namely B,C,D,E,H and L.Depending upon requirements,these registers other than Accumulator(A) can be used as Independent Byte Registers or as Register Pairs.
