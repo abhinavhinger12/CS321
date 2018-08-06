@@ -37,11 +37,11 @@ This program takes 2 Hexadecimal numbers(8bit or 16bit) and another integer to s
   processor. We converted it back along with the borrow bit(Indicates negative result).
 Eg 123H - 1234H --> 0001H 1111H (Answer is -1111)
 3. __Multiplication__(A\*B):
-   * We are doing repetitive addition of A , B times.Carry is incremented at every addition if it set carry flag 1.
-   * As the multiplcation of two 8 bit numbers can be maximum of 16 bits so we need register pair to store the result.
-   * Same Algorithm is followed for 16 bit numbers.Similar operations for Register Pairs are used (INX,DCX,ORA etc.)
+  * We are doing repetitive addition of A , B times.Carry is incremented at every addition if it set carry flag 1.
+  * As the multiplcation of two 8 bit numbers can be maximum of 16 bits so we need register pair to store the result.
+  * Same Algorithm is followed for 16 bit numbers.Similar operations for Register Pairs are used (INX,DCX,ORA etc.)
 4. __Division__ (A\/B):
-   * We are doing repeated subtraction of B from until A is less than B.The further subtraction will lead to a borrow bit 
+  * We are doing repeated subtraction of B from until A is less than B.The further subtraction will lead to a borrow bit 
    the loop breaks.The number of subtractions done until just before A was negative is the quotient.The closest positive
    value of A is the Remainder(Calculated by adding B to 1st negative value of A).
 
