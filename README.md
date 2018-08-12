@@ -45,4 +45,4 @@ Eg 123H - 1234H --> 0001H 1111H (Answer is -1111)
    the loop breaks.The number of subtractions done until just before A was negative is the quotient.The closest positive
    value of A is the Remainder(Calculated by adding B to 1st negative value of A).
 
-
+### 2. 24 Hour Clock and Timer
