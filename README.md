@@ -45,4 +45,22 @@ Eg 123H - 1234H --> 0001H 1111H (Answer is -1111)
    the loop breaks.The number of subtractions done until just before A was negative is the quotient.The closest positive
    value of A is the Remainder(Calculated by adding B to 1st negative value of A).
 
-### 2. 24 Hour Clock and Timer
+### 2. A)24 Hour Clock:
+  * Here we use the T-States of various intructions and Looping them fixed number of times to generate exact delay of 1
+  Second.Frequency of Crystal Oscillator of 8085 Microprocessor in 2 MHz.Using this we calculated the time a code block 
+  takes and generated 1 Second Delay.
+  * We used various Monitor Routines accessible to user:
+      1. UPDAD -Updates Address field of the display
+      2. UPDDT -Updates Data field of the display
+      3. CURDT  -Specific Memory Location
+      4. OUTPUT -Outputs characters to display
+      5. RDKBD  -Reads keyboard. This routine waits until a character is entered from the system keyboard
+      6. GTHEX  -Gets hex digits and displays them. 
+      
+  * Initially User inputs the starting time after "CLOC" is displayed and presses NEXT to start the clock
+  * The Second field is updated every second , Minute updated in 60 Second etc. Hour is reset once ir reaches 24 hours
+###    B) TIMER with Interrupt
+  * Similar code used to generate delay of 1 Second with the Clock running backwards from the Input entered by user
+  * Minimum Time that can be Measured(Counted Down) by Timer is 1 Min
+  * We used RST 7.5 (Hardware Interrupt) using KBINT to stop the Timer . See Example 7 of Chapter 8 for more insight.
+  Once stopped,it waits for another key to restart the timer.
