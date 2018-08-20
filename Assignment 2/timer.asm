@@ -107,11 +107,11 @@ DELAY:
 OUTLOOP:
 	LXI D,0AF00H
 INLOOP:
-	DCX D
+	DCX D		;decrease D-E register pair by 1
 	MOV A,D
-	ORA E
+	ORA E		;logical or of contents of A with contents of E
 	JNZ INLOOP
-	DCR C
+	DCR C		;decrease C by 1
 	JNZ OUTLOOP
 	RET
 INTHANDLE:
