@@ -62,9 +62,6 @@ HR_MIN:
 	SHLD CURAD
 	MVI A,00H
 NXT_SEC:
-	SIM	;Unmask Interrupt RST 7.5
-	EI	;Enable Int Flip Flop
-ABHI:
 	STA CURDT
 	CALL UPDAD
 	CALL UPDDT
@@ -93,7 +90,7 @@ ABHI:
 DELAY:
 	MVI C,03H
 OUTLOOP:
-	LXI D,9FFFH
+	LXI D,0A700H
 INLOOP:
 	DCX D
 	MOV A,D
@@ -102,9 +99,4 @@ INLOOP:
 	DCR C
 	JNZ OUTLOOP
 	RET
-INTHANDLE:
-	PUSH PSW  ;Save the Contents of program
-	CALL RDKBD ;Waits for Keyboard input to restart the timer
-	POP PSW  	;Replace the contents back
-	EI 		;Enable Interrupt
-	JMP ABHI	;Jump Back to the Normal Routine
+
