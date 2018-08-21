@@ -62,5 +62,5 @@ Eg 123H - 1234H --> 0001H 1111H (Answer is -1111)
 ###    B) TIMER with Interrupt
   * Similar code used to generate delay of 1 Second with the Clock running backwards from the Input entered by user
   * Minimum Time that can be Measured(Counted Down) by Timer is 1 Min
-  * We used RST 7.5 (Hardware Interrupt) using KBINT to stop the Timer . See Example 7 of Chapter 8 for more insight.
-  Once stopped,it waits for another key to restart the timer.
+  * We used RST 7.5 (Hardware Interrupt) using KBINT to stop the Timer . See Example 7 of Chapter 8 of the MP5 Manual for
+  more insight.Once stopped,it waits for another key to restart the timer.
