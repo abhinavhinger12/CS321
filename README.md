@@ -13,6 +13,14 @@ All Addresses and Data Values are to be written in Hexadecimal system.(Eg. LDA 8
 ## Guidelines to Run 
 1. Download the starter zip from CSE Repo > Hardware and VLSI Lab > HW Lab > esa-xt85.zip
 2. Using Adminstrator access , install c16.exe.We will use this to convert our .asm file to .lst and .hex.For additional steps, follow the Help guide from the attached repo.
+
+```sh
+
+$ c16 -h test.hex -l test.lst <filename>.asm
+$ xt85.exe
+
+```
+
 3. To run the .HEX file on the microprocessor , start the CMD prompt in Admin mode and run xt85.exe.
 4. Before Downloading the file on the board , turn the 1st DIP switch ON (By default) and 4th DIP switch ON to enable the download mode of the 8085 processor.Press RESET to execute the changes.
 5. Press Ctrl+D twice to get a Pop-up to enter the File name.Press Enter until the file is completely downloaded.
