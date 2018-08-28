@@ -8,6 +8,14 @@ OUTPUT: EQU 0389H
 HXDSP: EQU 034FH
 RDKBD: EQU 03BAH
 CLEAR: EQU 02BEH
+				;Lift travels in one direction servicing all requests in that direction only.  Changes
+				;direction only if there are no requests above the lift.  In all cases lift returns to
+				;floor0 (it is assumed all elevator users have a destination as floor0).  Input is taken
+				;in from LCI port B using 8 bit dip switch.  In case boss floor request comes, boss request
+				;is given top priority and will be serviced first.  All other requests will have to wait
+				;until boss reaches floor0.  Once boss request is serviced, elevator returns to normal
+				;functioning.  Note that boss floor must be predefined in memory location 8200H before 
+				;running the program
 
 LDA 8200H
 MOV H,A				;H stores location of boss floor (01H is first,02H is second, 04H is third and so on)
