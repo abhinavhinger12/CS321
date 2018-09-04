@@ -3,44 +3,44 @@ cpu "8085.tbl"
 hof "int8"
 org 9000h
 
-MVI A,8BH
+MVI A,8BH			;Sets ADC board's 8255 with A as output and B,C as input ports 
 OUT 43H
 
-MVI A,80H
+MVI A,80H			;Sets Motor board's 8255 with A,B,C as output ports
 OUT 03H
 
 
-MVI A,88H
+MVI A,88H			;contains orientation of motor as 10001000
 LOOP:
-PUSH PSW
-OUT 00H
-MVI D,04H
+PUSH PSW			;saves present contents in stack
+OUT 00H				;sends A to motor board via port A of 8255
+MVI D,04H			;D contains pin location of analog voltage source that is to be converted (board can have 20 sources)
 MVI E,04H
-CALL CONVERT
-STA 8501H
+CALL CONVERT			;convert operation, converts Analog to digital (8 bit)
+STA 8501H			;stores A in 8501H mm, where A contains converted DC value
 MOV B,A
 MVI A,0FFH
-SUB B
-MOV C,A
-STA 8500H
-CALL DELAY
+SUB B				;subtracts A from FF, A,C, and 8500H now contains distance of DC value from FF
+MOV C,A				
+STA 8500H			
+CALL DELAY			;calls delay, a directlry prop. function of C
 
-MVI D,04H
+MVI D,04H			;sets the required values for preventing any modified values from being sent to the next loop
 MVI E,04H
 MVI A,32H
 MVI C,04H
 STA 8500H
 LDA 8501H
 
-CALL DISPLAY
+CALL DISPLAY			;display function to update display with converted value(8501H)
 POP PSW
-RRC
+RRC				;circular right rotates value in A 
 JMP LOOP
 
 
 DELAY:
-	LOOP4a:  MVI D,01H
-	LOOP1a: LDA 8500H  
+	LOOP4a:  MVI D,01H	;runs proportional to C, hence time gap b/w each step is proportional to distance of DC val from FF
+	LOOP1a: LDA 8500H  	;implying speed of rotation is directly prop to voltage value
 	MOV E, A
 	LOOP2a:  DCR E
 	    JNZ LOOP2a
@@ -52,58 +52,45 @@ RET
 
 
 
-CONVERT:
-	MVI A,00H
+CONVERT:			;convert function
+	MVI A,00H		
+	ORA D
+	OUT 40H			;sends information of pin number to collect Analog value
+
+	MVI A,20H		;Start signal
+	ORA D
+	OUT 40H
+	NOP			;delays the CPU such that start signal will be set and understood by ADC
+	NOP
+	MVI A,00H		;ends start signal (starts conversion)
 	ORA D
 	OUT 40H
 
-	; START SIGNAL
-	MVI A,20H
-	ORA D
-	OUT 40H
-	
-	NOP
-	NOP
-	
-	; START PULSE OVER
-	MVI A,00H
-	ORA D
-	OUT 40H
-
-; EOC = PC0
-; CHECK FOR EOC PULSE
+				; EOC = C0 (c port, C0)
+				; CHECK FOR EOC PULSE
 WAIT1:
-	IN 42H
-	ANI 01H
+	IN 42H			;does two checks, EOC needs to be low and then needs to be high to imply end of conversion
+	ANI 01H			;(else EOC will be read incorrectly)
 	JNZ WAIT1
 WAIT2:
 	IN 42H
 	ANI 01H
 	JZ WAIT2
-
-
-
-; READ SIGNAL
+				;read signal, along with location of analog signal pin location
 	MVI A,40H
 	ORA D
 	OUT 40H
 	NOP
-
-	; GET THE CONVERTED DATA FROM PORT B
-	IN 41H
-
-	; SAVE A SO THAT WE CAN DEASSERT THE SIGNAL
-	PUSH PSW
-
-	; DEASSERT READ SIGNAL 
-	MVI A,00H
+	IN 41H			;gets converted data from port B
+	PUSH PSW		;A contains DC value, saved to allow deassertion of read signal
+	MVI A,00H		;deassertion of read signal
 	ORA D
 	OUT 40H
 	POP PSW
 
 RET
 
-DISPLAY:
+DISPLAY:			;standard display function, displays value on LED of 8085 board (83 trainer)
 		call DELAY
 		LDA 8501H
 		PUSH PSW
