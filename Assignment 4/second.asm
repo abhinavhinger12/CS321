@@ -2,58 +2,54 @@
 cpu "8085.tbl"
 hof "int8"
 
-
+				;motor here refers to stepper motor
 org 9000h
 
-MVI A,8BH
-OUT 43H
+MVI A,8BH			;sets 8255 of ADC as port A output and B,C as inputs
+OUT 43H				
 
 
-MVI A,80H
+MVI A,80H			;sets 8255 of Motor board as all outputs (Ports A,B,C)
 OUT 03H
 
 
-MVI A,88H 		;POSITION OF MOTOR'S ROTATOR , VARIES IN 88 44 22 00
+MVI A,88H 			;stores position of motor , VARIES IN 88 44 22 00
 STA 9300H
-MVI A,00H     ;POSITION OF MOTOR'S ACTUAL IN HEX
+MVI A,00H     			;stores actual motor postion in hexadecimal
 STA 9301H
-LOOP:
-	CALL DISPLAY
-	CALL FUNC
-	CALL DELAY
+LOOP:				;infinite loop, constantly samples Analog input
+	CALL DISPLAY		;displays converted ADC value on LED of 83 trainer board
+	CALL FUNC		;function to move motor shaft in required direction
+	CALL DELAY		;delay function to give motor time to react (finite inertia, and recharge, discharge time of motor coils)
 	JMP LOOP
 
 FUNC:
 
-	LDA 9301H				; ACTUAL POSITION
+	LDA 9301H		;loads present hexadecimal location into B
 	MOV B,A
-	MVI D,04H
+	MVI D,04H		;D stores location of AC input pin location
 	MVI E,04H			
-	CALL CONVERT 			; TO GO TO
+	CALL CONVERT		;convert function, same as defined in first.asm (standard function)
 	CMP B
-
-	JC LESSFUNC						; TO GO TO IS LESS THAN ACTUAL POS
-
-	JZ ENDFUNC
-
-MOREFUNC:						; TO GO TO IS MORE THAT ACTUAL POS
+	JC LESSFUNC		;if converted position is less than present position (hex) jumps to LESSFUNC
+	JZ ENDFUNC		;if equal ends func call
+MOREFUNC:			;else calls MOREFUNC
 	LDA 9301H
-	CPI 0FAH
+	CPI 0FAH		;max upper bound on voltage, will not allow motor to rotate further than this value
 	JC MOREFUNCL1
 	JZ MOREFUNCL2
 	JMP MOREFUNCL2
 MOREFUNCL1:
-	LDA 9300H
-	RRC
+	LDA 9300H		;if we havent reached max value, we rotate once to the right
+	RRC			;and increment present hex value by 3
 	OUT 00H
 	STA 9300H
 	LDA 9301H
 	ADI 03H
 MOREFUNCL2:STA 9301H
 	JMP ENDFUNC
-
-LESSFUNC:
-	LDA 9301H
+LESSFUNC:			;similar definition as MOREFUNC, however we rotate once to the left
+	LDA 9301H		;and decrement present hex value by 3
 	CPI 05H
 	JC LESSFUNCL2
 	JZ LESSFUNCL2
@@ -71,7 +67,7 @@ ENDFUNC:
 
 
 
-DELAY:
+DELAY:				;fixed delay function, gives constant delay of less than 1 second
 	MVI C, 0AH
 LOOP4a: MVI D, 16H
 LOOP1a: MVI E, 0DEH
@@ -85,7 +81,7 @@ LOOP2a: DCR E
 RET
 
 
-CONVERT:
+CONVERT:			;standard convert function 
 	MVI A,00H
 	ORA D
 	OUT 40H
