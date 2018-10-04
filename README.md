@@ -87,7 +87,7 @@ Eg 123H - 1234H --> 0001H 1111H (Answer is -1111)
   * Due to limited number of LCI board, the lift only brings the people to ground floor from various floors.
   * The Boss sits on a fixed floor stored previously (8200H).Any request from BOSS is given top priority and lift proceeds to 
   go towards BOSS to service him at the earliest. Lift takes him/her to Ground floor and then services remaining.
-  * A register stores the Current floor and B Register stores the Direction in which elevator at any given floor.If there is 
+  * A register stores the Current floor and B Register stores the Direction in which elevator at any given floor.If there is. 
   a request in the same direction as B then lift goes there else it goes in opposite direction.Delay is called to ensure lift 
   travels at normal speed (using same concept as 24HR clock).
 
